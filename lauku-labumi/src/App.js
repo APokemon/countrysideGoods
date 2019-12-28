@@ -13,8 +13,30 @@ import About from './app/pages/About'
 import Contacts from './app/pages/Contacts'
 import NotFound from './app/pages/NotFound'
 import {language as dictionary} from './language/language'
+import Toolbar from './app/component/Toolbar/Toolbar';
+import SideDrawer from './app/component/SideDrawer/SideDrawer';
+import Backdrop from './app/component/Backdrop/Backdrop'
+
+
+
+
 
 class App extends Component { 
+  state = {
+    sideDrawerOpen: false
+  }
+  drawerToggleClickHandler = () => {
+    this.setState((prevState) => {
+      return {sideDrawerOpen: !prevState.sideDrawerOpen};
+    });
+  };
+ 
+backdropClickHandler = () => {
+  this.setState({sideDrawerOpen: false})
+  console.log("Ha")
+}
+
+
   constructor (){
     super();
     this.state = {
@@ -29,9 +51,16 @@ class App extends Component {
     })
   }
 
+ // <Navigation changeLanguage ={this.changeLanguage} language = {this.state.language} dictionary={specificDictionary}/>
 
   
   render(){
+    let backdrop;
+
+    if (this.state.sideDrawerOpen) {
+      sideDrawer = <SideDrawer />;
+      backdrop = <Backdrop click={this.backdropClickHandler}/>
+    }
     let specificDictionary = dictionary.lv
      if(this.state.language==="RU"){
        specificDictionary = dictionary.ru
@@ -39,9 +68,16 @@ class App extends Component {
       specificDictionary = dictionary.en
     }
     return ( 
-    <div>
+    <div style= {{height:'100px'}}>
       <BrowserRouter>
-        <Navigation changeLanguage ={this.changeLanguage} language = {this.state.language} dictionary={specificDictionary}/>
+        <Toolbar drawerClickHandler={this.drawerToggleClickHandler}/>
+        <SideDrawer show = {this.state.sideDrawerOpen} />
+        {backdrop}
+        <main style={{marginTop :"64px" }}>
+          <p>
+            PAPAPAPAPAPPAPA
+          </p>
+        </main>
         <Switch>
           <Route path="/home" render={(props) => <Home {...props}  dictionary = {specificDictionary}/>}/>
           <Route path="/login" render={(props) => <Login {...props}  dictionary = {specificDictionary}/>}/>

@@ -3,6 +3,8 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Nav from "react-bootstrap/Nav";
 import { LinkContainer } from "react-router-bootstrap";
+import './myStyles.css';
+
 
 class Navigation extends Component {
   changeLanguage = lang => {
@@ -12,7 +14,7 @@ class Navigation extends Component {
   render() {
     return (
       <>
-        <Navbar bg="dark" variant="dark">
+        <Navbar bg="dark" variant="dark" tog>
           <LinkContainer to="/home">
             <Navbar.Brand>Countryside goods</Navbar.Brand>
           </LinkContainer>
@@ -32,8 +34,8 @@ class Navigation extends Component {
             <LinkContainer to="/contacts">
               <Nav.Link>{this.props.dictionary.navbar.contacts}</Nav.Link>
             </LinkContainer>
-            <NavDropdown title={this.props.language} id="basic-nav-dropdown">
-              <NavDropdown.Item
+            <NavDropdown title={this.props.language} sticky = 'top' id="basic-nav-dropdown">
+              <NavDropdown.Item 
                 style={{ fontWeight: "bold" }}
                 onClick={() => this.props.changeLanguage("LV")}
               >
